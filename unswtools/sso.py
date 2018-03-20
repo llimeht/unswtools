@@ -13,7 +13,8 @@ sso_url = ('https://ssologin.unsw.edu.au/cas/login?'
 
 MOODLE = "https://moodle.telt.unsw.edu.au/login/index.php"
 MYUNSW = "https://my.unsw.edu.au/portal/adfAuthentication"
-
+CERTS = os.path.join(os.path.dirname(__file__), 'myunsw.pem')
+#FIXME: perhaps stopping using the local certifi would help?
 
 def session(credentials='~/.unsw_credentials', service=MYUNSW):
 
@@ -25,6 +26,7 @@ def session(credentials='~/.unsw_credentials', service=MYUNSW):
 def login(url, username, password):
     # initialise the session and get the session cookie from SSO
     sso_session = requests.Session()
+    sso_session.verify = CERTS
     response_form = sso_session.get(url)
 
     # extract the magic lt variable (login token (?))
