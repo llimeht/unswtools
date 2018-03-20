@@ -1,4 +1,4 @@
-# Python modules for automatic website tasks
+# Python modules for automating website tasks
 
 This module offers a rather ad hoc collection of tools for automating various
 web tasks within one institution. If you're not a staff member at that
