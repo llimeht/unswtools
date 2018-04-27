@@ -1,3 +1,4 @@
+import datetime
 import json
 import requests
 
@@ -194,6 +195,7 @@ def save_report(html, course, filename=None):
     if filename is None:
         filename = "%s.html" % course
 
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     with open(filename, 'w') as fh:
         fh.write("""\
 <html>
