@@ -127,6 +127,7 @@ class Course:
         data = self.course_record()
 
         # FIXME: make methods or properties for each of these?
+        course_name = data['course_name']
         course_aims = data['course_aims']
         course_description = data['course_description']
 
@@ -159,6 +160,7 @@ class Course:
 
         # FIXME: use jinja templates instead
         entry = [
+            "<h2>%s: %s</h2>" % (self.course_code, course_name),
             "<h2>Course aims</h2>",
             course_aims if course_aims else "None specified",
             "<h2>Course description</h2>",
