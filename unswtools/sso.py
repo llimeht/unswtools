@@ -16,6 +16,18 @@ MYUNSW = "https://my.unsw.edu.au/portal/adfAuthentication"
 CERTS = os.path.join(os.path.dirname(__file__), 'myunsw.pem')
 #FIXME: perhaps stopping using the local certifi would help?
 
+
+# As at 2019-05-26, UNSW SSO server are permitting weak DH key exchange parameters
+# that prevents openssl from connecting. Disabling DH is necessary to establish
+# a connection at all.
+requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS += 'HIGH:!DH:!aNULL'
+try:
+    requests.packages.urllib3.contrib.pyopenssl.DEFAULT_SSL_CIPHER_LIST += 'HIGH:!DH:!aNULL'
+except AttributeError:
+    # no pyopenssl support used / needed / available
+    pass
+
+
 def session(credentials='~/.unsw_credentials', service=MYUNSW):
 
     username, password = load_credentials(credentials)
