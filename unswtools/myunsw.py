@@ -1,17 +1,16 @@
 
-from __future__ import unicode_literals
-
 import os.path
+import time
 
-from unswtools import sso
+from unswtools import adfs
 
 
 CACHE_DIRECTORY = 'cache'
 
 
 def login(credentials=None):
-    session = sso.session(credentials, sso.MYUNSW)
-    return session
+    driver, session = adfs.session(credentials, adfs.MYUNSW)
+    return driver, session
 
 
 search_target_url = ("https://my.unsw.edu.au"
@@ -24,7 +23,8 @@ transcript_url = ("https://my.unsw.edu.au"
 
 class MyUnsw:
 
-    def __init__(self, session):
+    def __init__(self, driver, session):
+        self.driver = driver
         self.session = session
 
     def fetch_transcript(self, id, filename='auto', directory=None,
@@ -54,5 +54,5 @@ class MyUnsw:
 
     @classmethod
     def login(cls, credentials=None):
-        session = login(credentials)
-        return cls(session)
+        driver, session = login(credentials)
+        return cls(driver, session)

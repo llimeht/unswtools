@@ -1,11 +1,11 @@
-from unswtools import sso
+from unswtools import adfs
 from moodletools import moodle
 
 url = "https://moodle.telt.unsw.edu.au/"
 
 
 def login(credentials=None):
-    session = sso.session(credentials, sso.MOODLE)
+    driver, session = adfs.session(credentials, adfs.MOODLE)
 
     m = moodle.Moodle(url, session)
 
